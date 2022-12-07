@@ -3,6 +3,7 @@ package com.example.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,7 +33,7 @@ class MainActivity : ComponentActivity() { //nuova activity da estendere quando 
                     //inserire elementi della ui
                     //Layout Box,Column,Row
                     //{Recompose}->{Structure}->{Presentation}
-                    MainNavHost()
+                    MainNavHost() //funzione composable che gestisce la navigazione tra composable
                 }
             }
         }
@@ -38,10 +43,10 @@ class MainActivity : ComponentActivity() { //nuova activity da estendere quando 
 @Composable
 fun MainScreen(
     viewModel: MainViewModel,
-    onClickToNavigate: (name: String) -> Unit
+    onClickToNavigate: (name: String) -> Unit //funzione con parametro stringa che non ritorna nulla
 ) {
     MainScreen(
-        viewModel.list,
+        list = viewModel.list,
         onClickToNavigate = onClickToNavigate,
         onClickToAdd = { viewModel.addElement(it) },
         onClickToDelete = { viewModel.remove(it) })
@@ -56,7 +61,7 @@ private fun MainScreen(
     onClickToDelete: (e: String) -> Unit
 ) {
     Box(Modifier.fillMaxSize()) {//tutti gli elementi vengono mostrati in colonna
-        LazyColumn {
+        LazyColumn { //equivalente di recycler view
             items(list) {
                 ListElement(name = it, onClick = onClickToDelete)
                 Divider()
@@ -64,8 +69,8 @@ private fun MainScreen(
         }
         FloatingActionButton(
             onClick = {
-                //onClickToAdd("test")
-                onClickToNavigate("test")
+                onClickToAdd("test")
+                //onClickToNavigate("test")
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
@@ -77,7 +82,11 @@ private fun MainScreen(
 }
 
 @Composable
-fun ListElement(name: String, onClick: (e: String) -> Unit, modifier: Modifier = Modifier) {
+fun ListElement(
+    name: String,
+    onClick: (e: String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier.padding(12.dp),
         verticalAlignment = CenterVertically

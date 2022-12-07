@@ -16,10 +16,15 @@ fun MainNavHost(
     startDestination : String = "main"
 ){
     NavHost(navController = navController, startDestination = startDestination){
+        //per ogni schermata dichiarare un composable con route
         composable("main"){
-            MainScreen(viewModel()){ name ->
-                navController.navigate("second/$name")
-            }
+            MainScreen(
+                viewModel = viewModel(),
+                onClickToNavigate = { name ->
+                   //navcontroller mi permette di cambiare schermata
+                    navController.navigate("second/$name")
+                }
+            )
         }
         composable(
             route ="second/{name}",
