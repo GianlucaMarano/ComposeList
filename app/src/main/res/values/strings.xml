@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">compose</string>
+    <string name="first">main</string>
+    <string name="second">second</string>
 </resources>

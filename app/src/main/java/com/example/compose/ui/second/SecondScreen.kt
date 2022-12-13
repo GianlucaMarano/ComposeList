@@ -1,4 +1,4 @@
-package com.example.compose
+package com.example.compose.ui.second
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,14 +8,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
 
 @Composable
-fun SecondScreen(name: String) {
+fun SecondScreen(viewModel: SecondViewModel) {
+  SecondScreen(number = viewModel.number)
+
+}
+
+@Composable
+fun SecondScreen(number: Int) {
     Box(modifier = Modifier.fillMaxSize()){
         Text(
-            text = "Ciao $name",
+            text = "Numero elementi: $number",
             modifier = Modifier.align(Alignment.Center),
-            style = MaterialTheme.typography.h3
+            style = MaterialTheme.typography.h4
         )
     }
 
@@ -24,5 +31,5 @@ fun SecondScreen(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun SecondPreview(){
-    SecondScreen(name = "a Tutti")
+    SecondScreen(2)
 }
